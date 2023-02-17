@@ -7,44 +7,100 @@
  * ***************************************************************/
 
 // função do calculo da média escolar e do exame
-const calculadora = function(nota1, nota2, nota3, nota4) {
-    let primeiraNota = Number(nota1);
-    let segundaNota = Number(nota2);
-    let terceiraNota = Number(nota3);
-    let quartaNota = Number(nota4);
+let mediaFinal;
+let situacao;
+let mediaRecuperacao;
 
-    let resultado = (Number(nota1) + Number(nota2) + Number(nota3) + Number(nota4) / 4);
-    return resultado;
-}
+const mostrarRelatorio = function(
+    nomeAluno,
+    nomeProfessor,
+    sexoAluno,
+    sexoProfessor,
+    nomeCurso,
+    nomeDisciplina,
+    numero1,
+    numero2,
+    numero3,
+    numero4,
+    notaExame
+) {
+    console.log(`
+    O ${nomeAluno} foi ${situacao} na disciplina ${nomeDisciplina}
+    Curso: ${nomeCurso}
+    ${sexoProfessor}: ${nomeProfessor}
+    Notas do ${sexoAluno}: ${numero1}, ${numero2}, ${numero3}, ${numero4}, ${notaExame}
+    Média final: ${mediaFinal}
+    Média final do Exame: ${mediaRecuperacao}
+    `);
+};
 
-
-const verificarSexoAluno = function(sexoAluno) {
-    let sexo = sexoAluno;
-    if (sexo == "M") {
-        sexo = "Aluno";
-    } else if (sexo == "F") {
-        sexo = "Aluna";
+const validarInput = function(numero) {
+    if (
+        isNumerosVazio(numero) &&
+        isNumeroValido(numero) &&
+        isNumerosDentroIntervalo(numero)
+    ) {
+        return numero;
     } else {
         return false;
     }
-    return sexo;
 };
 
-const verificarSexoProfessor = function(sexoProfessor) {
-    let sexo = sexoProfessor;
-    if (sexo == "M") {
-        sexo = sexo = "Professor";
-    } else if (sexo == "F") {
-        sexo = sexo = "Professora";
+const isNumerosDentroIntervalo = function(numero) {
+    if (Number(numero) <= 100 && Number(numero) >= 0) {
+        return true;
     } else {
+        console.log(
+            "NÚMERO FORA DO INTERVALO PERMITIDO. PREENCHA COM UM NÚMERO VÁLIDO"
+        );
         return false;
     }
-
-    return sexo;
 };
 
+const converterInput = function(numero) {
+    numero = numero.replace(",", ".");
+    return numero;
+};
 
-const recuperacao = function(notaExame) {
+const isNumerosVazio = function(numero) {
+    if (numero == "") {
+        console.log("NUMERO VAZIO. PREENCHA COM UM NÚMERO VÁLIDO");
+        return false;
+    } else {
+        return true;
+    }
+};
+
+const isNumeroValido = function(numero) {
+    if (isNaN(numero)) {
+        console.log("NÚMERO INVÁLIDO. PREENCHA COM UM NÚMERO VÁLIDO");
+        return false;
+    } else {
+        return true;
+    }
+};
+
+const isAlunoAprovado = function(numero1, numero2, numero3, numero4) {
+    mediaFinal =
+        (Number(numero1) + Number(numero2) + Number(numero3) + Number(numero4)) / 4;
+    situacao = "";
+
+    if (mediaFinal >= 70) {
+        situacao = "APROVADO";
+        mediaRecuperacao = "NÃO PRECISOU FAZER";
+        notaExame = "NÃO PRECISOU FAZER";
+        return true;
+    } else if (mediaFinal < 50) {
+        situacao = "REPROVADO";
+        mediaRecuperacao = "NÃO PRECISOU FAZER";
+        notaExame = "NÃO PRECISOU FAZER";
+        return true;
+    } else if (mediaFinal >= 50 && mediaFinal < 70) {
+        return false;
+    }
+};
+
+const fazerRecuperacao = function(notaExame) {
     mediaRecuperacao = (Number(mediaFinal) + Number(notaExame)) / 2;
 
     if (mediaRecuperacao >= 60) {
@@ -55,10 +111,78 @@ const recuperacao = function(notaExame) {
     return mediaRecuperacao;
 };
 
+const verificarSexoAluno = function(sexoAluno) {
+    if (sexoAluno == "M") {
+        sexoAluno = "Aluno";
+        return sexoAluno;
+    } else if (sexoAluno == "F") {
+        sexoAluno = "Aluna";
+        return sexoAluno;
+    } else {
+        console.log('DIGITE "M" PARA MASCULINO, OU "F" PARA FEMININO');
+        return false;
+    }
+};
+
+const verificarSexoProfessor = function(sexoProfessor) {
+    if (sexoProfessor == "M") {
+        sexoProfessor = "Professor";
+        return sexoProfessor;
+    } else if (sexoProfessor == "F") {
+        sexoProfessor = "Professora";
+        return sexoProfessor;
+    } else {
+        console.log('DIGITE "M" PARA MASCULINO, OU "F" PARA FEMININO');
+        return false;
+    }
+};
+
+const verificarNomeAluno = function(nomeAluno) {
+    if (nomeAluno == "") {
+        console.log("PREENCHA O NOME DO ALUNO");
+        return false;
+    } else {
+        return nomeAluno;
+    }
+};
+
+const verificarNomeProfessor = function(nomeProfessor) {
+    if (nomeProfessor == "") {
+        console.log("PREENCHA O NOME DO PROFESSOR");
+        return false;
+    } else {
+        return nomeProfessor;
+    }
+};
+
+const verificarNomeCurso = function(nomeCurso) {
+    if (nomeCurso == "") {
+        console.log("PREENCHA O NOME DO CURSO");
+        return false;
+    } else {
+        return nomeCurso;
+    }
+};
+
+const verificarNomeDisciplina = function(nomeDisciplina) {
+    if (nomeDisciplina == "") {
+        console.log("PREENCHA O NOME DA DISCIPLINA");
+        return false;
+    } else {
+        return nomeDisciplina;
+    }
+};
 
 module.exports = {
-    calculadora,
+    mostrarRelatorio,
+    validarInput,
+    isAlunoAprovado,
     verificarSexoAluno,
     verificarSexoProfessor,
-    recuperacao
-}
+    fazerRecuperacao,
+    verificarNomeAluno,
+    verificarNomeProfessor,
+    verificarNomeCurso,
+    verificarNomeDisciplina,
+    converterInput,
+};

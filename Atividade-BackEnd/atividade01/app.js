@@ -10,141 +10,183 @@ console.log('CALCULO DA MÉDIA ESCOLAR');
 console.log('xxxxxxxxxxxxxxxxxxxxxxxxx');
 
 // IMPORT'S
-var valores = require('./modulo/calculadora.js');
+var moduloExercicio1 = require('./modulo/calculadora.js');
 var readline = require('readline');
+var readline = require("readline");
+
 var entradaDados = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
 });
 
-// DADOS
-entradaDados.question('DIGITE O NOME DO(A) ALUNO(A):\n', function(nome) {
-    let nomeAluno = nome;
+entradaDados.question("Digite o nome do aluno: ", function(nome) {
+    let nomeAluno;
+    nomeAluno = moduloExercicio1.verificarNomeAluno(nome);
 
-    entradaDados.question('DIGITE O SEU NOME PROFESSOR(A):\n', function(professor) {
-        let nomeProf = professor;
+    if (nomeAluno == false) {
+        entradaDados.close();
+        return false;
+    }
 
-        entradaDados.question('QUAL SEU GÊNERO PROFESSSOR(A)? DIGITE "M" PARA MASCULINO, OU "F" PARA \n ', function(sexo) {
-            let sexoProfessor;
-            if (valores.verificarSexoProfessor(sexo)) {
-                sexoProfessor = valores.verificarSexoProfessor(sexo);
+    entradaDados.question("Digite o nome do professor: ", function(nome) {
+        let nomeProfessor;
+        nomeProfessor = moduloExercicio1.verificarNomeProfessor(nome);
 
-            } else {
+        if (nomeProfessor == false) {
+            entradaDados.close();
+            return false;
+        }
+
+        entradaDados.question("Digite o sexo do aluno: ", function(sexo) {
+            let sexoAluno;
+            sexoAluno = moduloExercicio1.verificarSexoAluno(sexo);
+
+            if (sexoAluno == false) {
                 entradaDados.close();
-
-                entradaDados.question('QUAL O GÊNERO DO(A) ALUNO(A)? DIGITE "M" PARA MASCULINO, OU "F" PARA \n ', function(sexo) {
-                    let sexoAluno;
-                    if (valores.verificarSexoAluno(sexo)) {
-                        sexoAluno = valores.verificarSexoAluno(sexo);
-
-                    } else {
-                        entradaDados.close();
-
-                        //////////////////////////////////////////////////////////////////
-
-
-                        entradaDados.question('CURSO:\n', function(curso) {
-                            let nomeCurso = curso;
-
-                            entradaDados.question('DISCIPLINA:\n', function(disciplina) {
-                                disciplinaNome = disciplina;
-
-                                //////////////////////////////////////////////////////////////////
-
-                                entradaDados.question('DIGITE A NOTA 01:\n', function(nota1) {
-                                    let primeiraNota = nota1.replace(",", ".");
-
-                                    entradaDados.question('DIGITE A NOTA 02:\n', function(nota2) {
-                                        let segundaNota = nota2.replace(",", ".");
-
-                                        entradaDados.question('DIGITE A NOTA 03:\n', function(nota3) {
-                                            let terceiraNota = nota3.replace(",", ".");
-
-                                            entradaDados.question('DIGITE A NOTA 04:\n', function(nota4) {
-                                                    let quartaNota = nota4.replace(",", ".");
-                                                    let media = 0;
-
-                                                    console.log(media);
-
-                                                    //////////////////////////////////////////////////////////////////
-
-
-                                                    // VALIDAÇÕES 
-                                                    if (primeiraNota == '' || segundaNota == '' ||
-                                                        terceiraNota == '' || quartaNota == '') {
-                                                        console.log('ERRO: É necessário digitar algum valor nas entradas')
-                                                        entradaDados.close();
-
-                                                    } else if (isNaN(primeiraNota) || isNaN(segundaNota) ||
-                                                        isNaN(terceiraNota) || isNaN(quartaNota)) {
-
-                                                        console.log('ERRO: É necessário que todos os dados digitados sejam números')
-                                                        entradaDados.close();
-
-                                                    } else if (primeiraNota < 0 || primeiraNota > 100 ||
-                                                        segundaNota < 0 || segundaNota > 100 ||
-                                                        terceiraNota < 0 || terceiraNota > 100 ||
-                                                        quartaNota < 0 || quartaNota > 100) {
-
-                                                        console.log('ERRO: A nota deve ser entre 0 a 100');
-                                                        entradaDados.close();
-
-                                                        if (mediaFinal >= 70) {
-                                                            situacao = "APROVADO";
-                                                            mediaRecuperacao = "NÃO PRECISOU FAZER";
-                                                            notaExame = "NÃO PRECISOU FAZER";
-                                                            return true;
-                                                        } else if (mediaFinal < 50) {
-                                                            situacao = "REPROVADO";
-                                                            return true;
-                                                        } else if (mediaFinal >= 50 && mediaFinal < 70) {
-                                                            fazerRecuperacao();
-                                                            return false;
-                                                        } else {
-                                                            return false;
-                                                        }
-                                                    };
-
-                                                    //////////////////////////////////////////////////////////////////////
-
-                                                    if (nomeAluno == '')
-                                                        console.log('ERRO: É necessário que o nome do aluno seja digitado');
-                                                    entradaDados.close();
-
-
-                                                    if (nomeProf == '')
-                                                        console.log('ERRO: É necessário que o nome do professor seja digitado');
-                                                    entradaDados.close();
-
-                                                    if (nomeCurso == '')
-                                                        console.log('ERRO: É necessário que o nome do curso seja digitado');
-                                                    entradaDados.close();
-
-
-                                                    if (disciplinaNome == '')
-                                                        console.log('ERRO: É necessário que o nome da disciplina seja digitado');
-                                                    entradaDados.close();
-
-                                                    console.log(`
-                                        O ${nomeAluno} foi ${situacao} na disciplina ${nomeDisciplina}
-                                        Curso: ${nomeCurso}
-                                        ${sexoProfessor}: ${nomeProfessor}
-                                        Notas do ${sexoAluno}: ${numero1}, ${numero2}, ${numero3}, ${numero4}, ${notaExame}
-                                        Média final: ${mediaFinal}
-                                        Média final do Exame: ${mediaRecuperacao}
-                                        `);
-                                                }
-
-                                            )
-
-                                        })
-                                    })
-                                })
-                            })
-                        })
-                    }
-                })
+                return false;
             }
-        })
-    })
-})
+
+            entradaDados.question("Digite o sexo do professor: ", function(sexo) {
+                let sexoProfessor;
+                sexoProfessor = moduloExercicio1.verificarSexoProfessor(sexo);
+
+                if (sexoProfessor == false) {
+                    entradaDados.close();
+                    return false;
+                }
+
+                entradaDados.question("Digite o nome do curso: ", function(curso) {
+                    let nomeCurso;
+                    nomeCurso = moduloExercicio1.verificarNomeCurso(curso);
+
+                    if (nomeCurso == false) {
+                        entradaDados.close();
+                        return false;
+                    }
+
+                    entradaDados.question(
+                        "Digite o nome da disciplina: ",
+                        function(disciplina) {
+                            let nomeDisciplina;
+
+                            nomeDisciplina =
+                                moduloExercicio1.verificarNomeDisciplina(disciplina);
+
+                            if (nomeDisciplina == false) {
+                                entradaDados.close();
+                                return false;
+                            }
+
+                            entradaDados.question(
+                                "Digite a primeira nota de 0 a 100: ",
+                                function(nota1) {
+                                    let primeiraNota;
+                                    nota1 = moduloExercicio1.converterInput(nota1);
+
+                                    primeiraNota = moduloExercicio1.validarInput(nota1);
+
+                                    if (primeiraNota == false) {
+                                        entradaDados.close();
+                                        return false;
+                                    }
+
+                                    entradaDados.question(
+                                        "Digite a segunda nota de 0 a 100: ",
+                                        function(nota2) {
+                                            let segundaNota;
+                                            nota2 = moduloExercicio1.converterInput(nota2);
+
+                                            segundaNota = moduloExercicio1.validarInput(nota2);
+
+                                            if (segundaNota == false) {
+                                                entradaDados.close();
+                                                return false;
+                                            }
+
+                                            entradaDados.question(
+                                                "Digite a terceira nota de 0 a 100: ",
+                                                function(nota3) {
+                                                    let terceiraNota;
+                                                    nota3 = moduloExercicio1.converterInput(nota3);
+
+                                                    terceiraNota = moduloExercicio1.validarInput(nota3);
+
+                                                    if (terceiraNota == false) {
+                                                        entradaDados.close();
+                                                        return false;
+                                                    }
+
+                                                    entradaDados.question(
+                                                        "Digite a quarta nota de 0 a 100: ",
+                                                        function(nota4) {
+                                                            let quartaNota;
+                                                            nota4 = moduloExercicio1.converterInput(nota4);
+
+                                                            quartaNota = moduloExercicio1.validarInput(nota4);
+
+                                                            if (quartaNota == false) {
+                                                                entradaDados.close();
+                                                                return false;
+                                                            }
+
+                                                            if (
+                                                                moduloExercicio1.isAlunoAprovado(
+                                                                    primeiraNota,
+                                                                    segundaNota,
+                                                                    terceiraNota,
+                                                                    quartaNota
+                                                                )
+                                                            ) {
+                                                                moduloExercicio1.mostrarRelatorio(
+                                                                    nomeAluno,
+                                                                    nomeProfessor,
+                                                                    sexoAluno,
+                                                                    sexoProfessor,
+                                                                    nomeCurso,
+                                                                    nomeDisciplina,
+                                                                    primeiraNota,
+                                                                    segundaNota,
+                                                                    terceiraNota,
+                                                                    quartaNota,
+                                                                    "NÃO PRECISOU FAZER"
+                                                                );
+                                                                entradaDados.close();
+                                                            } else {
+                                                                entradaDados.question(
+                                                                    "Insira a nota do exame: ",
+                                                                    function(nota) {
+                                                                        nota =
+                                                                            moduloExercicio1.converterInput(nota);
+                                                                        moduloExercicio1.fazerRecuperacao(nota);
+                                                                        moduloExercicio1.mostrarRelatorio(
+                                                                            nomeAluno,
+                                                                            nomeProfessor,
+                                                                            sexoAluno,
+                                                                            sexoProfessor,
+                                                                            nomeCurso,
+                                                                            nomeDisciplina,
+                                                                            primeiraNota,
+                                                                            segundaNota,
+                                                                            terceiraNota,
+                                                                            quartaNota,
+                                                                            nota
+                                                                        );
+                                                                        entradaDados.close();
+                                                                    }
+                                                                );
+                                                            }
+                                                        }
+                                                    );
+                                                }
+                                            );
+                                        }
+                                    );
+                                }
+                            );
+                        }
+                    );
+                });
+            });
+        });
+    });
+});
