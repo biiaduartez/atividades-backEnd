@@ -10,7 +10,7 @@ console.log('CALCULO DA MÉDIA ESCOLAR');
 console.log('xxxxxxxxxxxxxxxxxxxxxxxxx');
 
 // IMPORT'S
-var moduloExercicio1 = require('./modulo/calculadora.js');
+var valores = require('./modulo/calculadora.js');
 var readline = require('readline');
 var readline = require("readline");
 
@@ -21,7 +21,7 @@ var entradaDados = readline.createInterface({
 
 entradaDados.question("Digite o nome do aluno: ", function(nome) {
     let nomeAluno;
-    nomeAluno = moduloExercicio1.verificarNomeAluno(nome);
+    nomeAluno = valores.verificarNomeAluno(nome);
 
     if (nomeAluno == false) {
         entradaDados.close();
@@ -30,7 +30,7 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
 
     entradaDados.question("Digite o nome do professor: ", function(nome) {
         let nomeProfessor;
-        nomeProfessor = moduloExercicio1.verificarNomeProfessor(nome);
+        nomeProfessor = valores.verificarNomeProfessor(nome);
 
         if (nomeProfessor == false) {
             entradaDados.close();
@@ -39,7 +39,7 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
 
         entradaDados.question("Digite o sexo do aluno: ", function(sexo) {
             let sexoAluno;
-            sexoAluno = moduloExercicio1.verificarSexoAluno(sexo);
+            sexoAluno = valores.verificarSexoAluno(sexo);
 
             if (sexoAluno == false) {
                 entradaDados.close();
@@ -48,7 +48,7 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
 
             entradaDados.question("Digite o sexo do professor: ", function(sexo) {
                 let sexoProfessor;
-                sexoProfessor = moduloExercicio1.verificarSexoProfessor(sexo);
+                sexoProfessor = valores.verificarSexoProfessor(sexo);
 
                 if (sexoProfessor == false) {
                     entradaDados.close();
@@ -57,7 +57,7 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
 
                 entradaDados.question("Digite o nome do curso: ", function(curso) {
                     let nomeCurso;
-                    nomeCurso = moduloExercicio1.verificarNomeCurso(curso);
+                    nomeCurso = valores.verificarNomeCurso(curso);
 
                     if (nomeCurso == false) {
                         entradaDados.close();
@@ -70,7 +70,7 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                             let nomeDisciplina;
 
                             nomeDisciplina =
-                                moduloExercicio1.verificarNomeDisciplina(disciplina);
+                                valores.verificarNomeDisciplina(disciplina);
 
                             if (nomeDisciplina == false) {
                                 entradaDados.close();
@@ -81,9 +81,9 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                                 "Digite a primeira nota de 0 a 100: ",
                                 function(nota1) {
                                     let primeiraNota;
-                                    nota1 = moduloExercicio1.converterInput(nota1);
+                                    nota1 = valores.converterInput(nota1);
 
-                                    primeiraNota = moduloExercicio1.validarInput(nota1);
+                                    primeiraNota = valores.validarInput(nota1);
 
                                     if (primeiraNota == false) {
                                         entradaDados.close();
@@ -94,9 +94,9 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                                         "Digite a segunda nota de 0 a 100: ",
                                         function(nota2) {
                                             let segundaNota;
-                                            nota2 = moduloExercicio1.converterInput(nota2);
+                                            nota2 = valores.converterInput(nota2);
 
-                                            segundaNota = moduloExercicio1.validarInput(nota2);
+                                            segundaNota = valores.validarInput(nota2);
 
                                             if (segundaNota == false) {
                                                 entradaDados.close();
@@ -107,9 +107,9 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                                                 "Digite a terceira nota de 0 a 100: ",
                                                 function(nota3) {
                                                     let terceiraNota;
-                                                    nota3 = moduloExercicio1.converterInput(nota3);
+                                                    nota3 = valores.converterInput(nota3);
 
-                                                    terceiraNota = moduloExercicio1.validarInput(nota3);
+                                                    terceiraNota = valores.validarInput(nota3);
 
                                                     if (terceiraNota == false) {
                                                         entradaDados.close();
@@ -120,9 +120,9 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                                                         "Digite a quarta nota de 0 a 100: ",
                                                         function(nota4) {
                                                             let quartaNota;
-                                                            nota4 = moduloExercicio1.converterInput(nota4);
+                                                            nota4 = valores.converterInput(nota4);
 
-                                                            quartaNota = moduloExercicio1.validarInput(nota4);
+                                                            quartaNota = valores.validarInput(nota4);
 
                                                             if (quartaNota == false) {
                                                                 entradaDados.close();
@@ -130,14 +130,14 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                                                             }
 
                                                             if (
-                                                                moduloExercicio1.isAlunoAprovado(
+                                                                valores.isAlunoAprovado(
                                                                     primeiraNota,
                                                                     segundaNota,
                                                                     terceiraNota,
                                                                     quartaNota
                                                                 )
                                                             ) {
-                                                                moduloExercicio1.mostrarRelatorio(
+                                                                valores.mostrarRelatorio(
                                                                     nomeAluno,
                                                                     nomeProfessor,
                                                                     sexoAluno,
@@ -156,9 +156,9 @@ entradaDados.question("Digite o nome do aluno: ", function(nome) {
                                                                     "Insira a nota do exame: ",
                                                                     function(nota) {
                                                                         nota =
-                                                                            moduloExercicio1.converterInput(nota);
-                                                                        moduloExercicio1.fazerRecuperacao(nota);
-                                                                        moduloExercicio1.mostrarRelatorio(
+                                                                            valores.converterInput(nota);
+                                                                        valores.fazerRecuperacao(nota);
+                                                                        valores.mostrarRelatorio(
                                                                             nomeAluno,
                                                                             nomeProfessor,
                                                                             sexoAluno,
