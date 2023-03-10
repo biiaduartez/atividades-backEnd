@@ -22475,10 +22475,10 @@ const getListaDeEstados = function() {
         listaEstado.uf = lista
         lista.push(dadosEstado.sigla)
 
-        return lista;
     })
-    console.log(lista);
-    console.log(`quantidade: ${lista.length}`);
+
+
+    return listaEstado.length != 0 ? listaEstados : false;
 };
 
 function getDadosEstado(dadosEstado) {
@@ -22501,6 +22501,7 @@ function getDadosEstado(dadosEstado) {
 
 }
 
+
 function getCapitalEstado(dadosEstado) {
     let listaEstado = {}
 
@@ -22521,21 +22522,20 @@ function getCapitalEstado(dadosEstado) {
 
 function getEstadosRegiao(regiao) {
 
-    let listaEstado = {}
+    let listaEstados = {}
     let lista = []
 
     estadosCidades.estados.forEach(estados => {
 
-        if (regiao == estados.getEstadosDadosRegiao) {
+        if (regiao == estados.regiao) {
 
-            lista.push({
-                uf: estados.sigla,
-                descricao: estados.nome
-            })
+            lista.push({ uf: estados.sigla, descricao: estados.nome })
         }
-        listaEstado.estados = lista
     })
-    return (listaEstado.estados).length != 0 ? listaEstado : false
+    listaEstados.estados = lista
+
+
+    return (listaEstados.estados).length != 0 ? listaEstados : false
 
 }
 
@@ -22590,4 +22590,11 @@ function getCidades(ufEstado) {
     return lista.length != 0 ? listaEstados : false
 }
 
-console.log(getCapitalPais())
+module.exports = {
+    getListaDeEstados,
+    getDadosEstado,
+    getCapitalEstado,
+    getEstadosRegiao,
+    getCapitalPais,
+    getCidades
+}
