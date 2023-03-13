@@ -21,6 +21,9 @@ const express = require('express'); //---> responsável das requisições
 const cors = require('cors'); //---> responsável elas permissões das requisições
 const bodyParser = require('body-parser'); //---> responsável pela manipulação do body da requisição
 
+//import do arquivo
+const estadosCidades = require('./modulo/estados_cidades.js');
+
 const app = express(); // cria um objeto com as informações om a classse express
 
 app.use((request, response, next) => {
@@ -39,14 +42,75 @@ app.use((request, response, next) => {
 //endPoint ---> Listar Estados
 app.get('/estados', cors(), async function(request, response, next) {
 
-    const estadosCidades = require('./modulo/estados_cidades.js');
+
+    //chama a função de retorno
     let listaDeEstados = estadosCidades.getListaDeEstados()
 
-    response.json(listaDeEstados);
-    response.status(200)
+    // tratamento de validação de processamento
+    if (listaDeEstados) {
+
+        response.json(listaDeEstados);
+        response.status(200)
+
+    } else {
+        response.status(500)
+    }
 
 });
 
+// endPoint ---> Lista Caracteristicas do estado pela sigla
+app.get('/estado/sigla/:uf', cors(), async function(request, response, next) { //uf: --> é uma variavel que vai ser usada na passagem de valores, na URL
+
+
+    let siglaEstado = request.params.uf
+    let statusCode;
+    let dadosEstado = {};
+
+    if (siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)) {
+
+        statusCode = 400;
+        estado.message = "Não é possível realizar requisição pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 digitos)"
+
+    } else {
+        let estado = estadosCidades.getDadosEstado(siglaEstado);
+        if (estado) {
+            statusCode = 200;
+            dadosEstado.estado
+        } else {
+            statusCode = 404;
+
+        }
+    }
+
+    response.status(statusCode);
+    response.json(dadosEstado);
+});
+app.get('/estado/capital/:uf', cors(), async function(request, response, next) {
+
+
+    let siglaEstado = request.params.uf
+    let statusCode;
+    let dadosEstado = {};
+
+    if (siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)) {
+
+        statusCode = 400;
+        estado.message = "Não é possível realizar requisição pois a sigla do estado não foi informada ou não atende a quantidade de caracteres (2 digitos)"
+
+    } else {
+        let estado = estadosCidades.getCapitalEstado(siglaEstado);
+        if (estado) {
+            statusCode = 200;
+            dadosEstado.estado
+        } else {
+            statusCode = 404;
+
+        }
+    }
+
+    response.status(statusCode);
+    response.json(dadosEstado);
+});
 //Permite caregar os endPoints criados e aguardar as requisições
 // pelo protocolo HTTP na porta 8080
 app.listen(8080, function() {
